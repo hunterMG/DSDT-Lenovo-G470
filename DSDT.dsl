@@ -2902,12 +2902,12 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         {
                             If (PXSG)
                             {
-                                Notify (^^^GFX0.DD02, 0x87)
+                                Notify (^^^IGPU.DD02, 0x87)
                                 Notify (^^^PEG0.PEGP.DD02, 0x87)
                             }
                             ElseIf (IGDS)
                             {
-                                Notify (^^^GFX0.DD02, 0x87)
+                                Notify (^^^IGPU.DD02, 0x87)
                             }
                             Else
                             {
@@ -2920,11 +2920,11 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                             Add (Local0, 0x02, Local0)
                             If (PXSG)
                             {
-                                ^^^GFX0.AINT (One, DerefOf (Index (^^^GFX0.DD02.PLVL, Local0)))
+                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
                             }
                             ElseIf (IGDS)
                             {
-                                ^^^GFX0.AINT (One, DerefOf (Index (^^^GFX0.DD02.PLVL, Local0)))
+                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
                             }
                             Else
                             {
@@ -2941,12 +2941,12 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         {
                             If (PXSG)
                             {
-                                Notify (^^^GFX0.DD02, 0x86)
+                                Notify (^^^IGPU.DD02, 0x86)
                                 Notify (^^^PEG0.PEGP.DD02, 0x86)
                             }
                             ElseIf (IGDS)
                             {
-                                Notify (^^^GFX0.DD02, 0x86)
+                                Notify (^^^IGPU.DD02, 0x86)
                             }
                             Else
                             {
@@ -2959,11 +2959,11 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                             Add (Local0, 0x02, Local0)
                             If (PXSG)
                             {
-                                ^^^GFX0.AINT (One, DerefOf (Index (^^^GFX0.DD02.PLVL, Local0)))
+                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
                             }
                             ElseIf (IGDS)
                             {
-                                ^^^GFX0.AINT (One, DerefOf (Index (^^^GFX0.DD02.PLVL, Local0)))
+                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
                             }
                             Else
                             {
@@ -3003,7 +3003,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                                 {
                                     If (IGDS)
                                     {
-                                        ^^^GFX0.GHDS (Zero)
+                                        ^^^IGPU.GHDS (Zero)
                                     }
                                     Else
                                     {
@@ -3288,7 +3288,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                                     {
                                         Store (VDAT, Local0)
                                         Add (Local0, 0x02, Local0)
-                                        ^^^^GFX0.AINT (One, DerefOf (Index (^^^^GFX0.DD02.PLVL, Local0)))
+                                        ^^^^IGPU.AINT (One, DerefOf (Index (^^^^IGPU.DD02.PLVL, Local0)))
                                         Return (Zero)
                                     }
                                 }
@@ -4792,7 +4792,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
     {
         Method (_INI, 0, NotSerialized)  // _INI: Initialize
         {
-            Store (One, ^GFX0.CLID)
+            Store (One, ^IGPU.CLID)
             Store (0x07D0, OSYS)
             If (CondRefOf (\_OSI, Local0))
             {
@@ -4841,7 +4841,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
             {
                 Name (BBCL, Buffer (0x16) {})
                 Name (INDX, Zero)
-                ToBuffer (^GFX0.BCLM, BBCL)
+                ToBuffer (^IGPU.BCLM, BBCL)
                 Store (Zero, INDX)
                 While (LLess (INDX, 0x0B))
                 {
@@ -4849,7 +4849,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                     Add (INDX, 0x02, Local1)
                     If (IGDS)
                     {
-                        And (DerefOf (Index (BBCL, Local2)), 0x7F, Index (^GFX0.DD02.PLVL, Local1))
+                        And (DerefOf (Index (BBCL, Local2)), 0x7F, Index (^IGPU.DD02.PLVL, Local1))
                     }
                     Else
                     {
@@ -4862,7 +4862,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         Add (Multiply (INDX, 0x02), One, Local3)
                         If (IGDS)
                         {
-                            And (DerefOf (Index (BBCL, Local3)), 0x7F, Index (^GFX0.DD02.PLVL, One))
+                            And (DerefOf (Index (BBCL, Local3)), 0x7F, Index (^IGPU.DD02.PLVL, One))
                         }
                         Else
                         {
@@ -4875,7 +4875,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         Add (Multiply (INDX, 0x02), One, Local3)
                         If (IGDS)
                         {
-                            And (DerefOf (Index (BBCL, Local3)), 0x7F, Index (^GFX0.DD02.PLVL, Zero))
+                            And (DerefOf (Index (BBCL, Local3)), 0x7F, Index (^IGPU.DD02.PLVL, Zero))
                         }
                         Else
                         {
@@ -5217,42 +5217,42 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
     {
         If (LEqual (And (DID1, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD01, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD01, Arg0)
         }
 
         If (LEqual (And (DID2, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD02, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD02, Arg0)
         }
 
         If (LEqual (And (DID3, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD03, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD03, Arg0)
         }
 
         If (LEqual (And (DID4, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD04, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD04, Arg0)
         }
 
         If (LEqual (And (DID5, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD05, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD05, Arg0)
         }
 
         If (LEqual (And (DID6, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD06, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD06, Arg0)
         }
 
         If (LEqual (And (DID7, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD07, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD07, Arg0)
         }
 
         If (LEqual (And (DID8, 0x0F00), 0x0400))
         {
-            Notify (\_SB.PCI0.GFX0.DD08, Arg0)
+            Notify (\_SB.PCI0.IGPU.DD08, Arg0)
         }
     }
 
@@ -8231,9 +8231,9 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
         {
             P8XH (0x04, 0x06, Zero)
             P8XH (0x04, 0x06, One)
-            If (LAnd (\_SB.PCI0.GFX0.GSSE, LNot (GSMI)))
+            If (LAnd (\_SB.PCI0.IGPU.GSSE, LNot (GSMI)))
             {
-                \_SB.PCI0.GFX0.GSCI ()
+                \_SB.PCI0.IGPU.GSCI ()
             }
 
             P8XH (0x04, 0x16, Zero)
@@ -8258,9 +8258,9 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
 
             If (IGDS)
             {
-                If (\_SB.PCI0.GFX0.SCIP ())
+                If (\_SB.PCI0.IGPU.SCIP ())
                 {
-                    \_SB.PCI0.GFX0.GLID (LAnd (GIV1, 0x08))
+                    \_SB.PCI0.IGPU.GLID (LAnd (GIV1, 0x08))
                 }
                 Else
                 {
@@ -8737,9 +8737,9 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         P8XH (0x04, 0x08, One)
                         If (IGDS)
                         {
-                            Store (^^^^GFX0.DD02.LVLS (Arg0), Local1)
+                            Store (^^^^IGPU.DD02.LVLS (Arg0), Local1)
                             Store (Local1, ^^^^LPCB.EC0.BRTS)
-                            ^^^^GFX0.AINT (One, Arg0)
+                            ^^^^IGPU.AINT (One, Arg0)
                         }
                         Else
                         {
@@ -9287,7 +9287,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
             Name (_ADR, 0x00040000)  // _ADR: Address
         }
 
-        Device (GFX0)
+        Device (IGPU)
         {
             Name (_ADR, 0x00020000)  // _ADR: Address
             Method (_DOS, 1, NotSerialized)  // _DOS: Disable Output Switching
@@ -10574,7 +10574,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                     }
                     Else
                     {
-                        Notify (GFX0, Arg1)
+                        Notify (IGPU, Arg1)
                     }
                 }
 
@@ -10584,7 +10584,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                 }
                 Else
                 {
-                    Notify (GFX0, 0x80)
+                    Notify (IGPU, 0x80)
                 }
 
                 Return (Zero)
