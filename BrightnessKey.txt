@@ -1,0 +1,16 @@
+# G470 brightness key patch
+# prerequisite： ACPIKeyboard.kext installed
+
+into method label _Q11 replace_content
+begin
+// Brightness Down\n
+Notify(\RMKB, 0x2191)\n
+Notify(\RMKB, 0x2291)\n
+end;
+
+into method label _Q12 replace_content
+begin
+// Brightness Up\n
+Notify(\RMKB, 0x2190)\n
+Notify(\RMKB, 0x2290)\n
+end;

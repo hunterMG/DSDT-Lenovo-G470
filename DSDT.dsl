@@ -2897,80 +2897,28 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
 
                     Method (_Q11, 0, NotSerialized)  // _Qxx: EC Query
                     {
-                        Store (0x11, P80H)
-                        If (LGreaterEqual (OSYS, 0x07D6))
-                        {
-                            If (PXSG)
-                            {
-                                Notify (^^^IGPU.DD02, 0x87)
-                                Notify (^^^PEG0.PEGP.DD02, 0x87)
-                            }
-                            ElseIf (IGDS)
-                            {
-                                Notify (^^^IGPU.DD02, 0x87)
-                            }
-                            Else
-                            {
-                                Notify (^^^PEG0.VGA.LCD, 0x87)
-                            }
-                        }
-                        Else
-                        {
-                            Store (BRTS, Local0)
-                            Add (Local0, 0x02, Local0)
-                            If (PXSG)
-                            {
-                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
-                            }
-                            ElseIf (IGDS)
-                            {
-                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
-                            }
-                            Else
-                            {
-                            }
-                        }
+                        
+                        
+                        
+                        // Brightness Down
+                        Notify(\RMKB, 0x2191)
+                        Notify(\RMKB, 0x2291)
 
-                        Notify (VPC0, 0x80)
+
+
                     }
 
                     Method (_Q12, 0, NotSerialized)  // _Qxx: EC Query
                     {
-                        Store (0x12, P80H)
-                        If (LGreaterEqual (OSYS, 0x07D6))
-                        {
-                            If (PXSG)
-                            {
-                                Notify (^^^IGPU.DD02, 0x86)
-                                Notify (^^^PEG0.PEGP.DD02, 0x86)
-                            }
-                            ElseIf (IGDS)
-                            {
-                                Notify (^^^IGPU.DD02, 0x86)
-                            }
-                            Else
-                            {
-                                Notify (^^^PEG0.VGA.LCD, 0x86)
-                            }
-                        }
-                        Else
-                        {
-                            Store (BRTS, Local0)
-                            Add (Local0, 0x02, Local0)
-                            If (PXSG)
-                            {
-                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
-                            }
-                            ElseIf (IGDS)
-                            {
-                                ^^^IGPU.AINT (One, DerefOf (Index (^^^IGPU.DD02.PLVL, Local0)))
-                            }
-                            Else
-                            {
-                            }
-                        }
+                        
+                        
+                        
+                        // Brightness Up
+                        Notify(\RMKB, 0x2190)
+                        Notify(\RMKB, 0x2290)
 
-                        Notify (VPC0, 0x80)
+
+
                     }
 
                     Method (_Q13, 0, NotSerialized)  // _Qxx: EC Query
@@ -10816,6 +10764,10 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
             Name (_UID, 10)
             Name (_STA, 0x0B)
         }
+    }
+    Device (RMKB)
+    {
+        Name(_HID, "RMKB0000")
     }
 }
 
