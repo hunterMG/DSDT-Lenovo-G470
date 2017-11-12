@@ -2707,7 +2707,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         Offset (0x5B), 
                         Offset (0x5C), 
                         Offset (0x5D), 
-                        ENIB,   16, 
+                        NIB0,8,NIB1,8, 
                         ENDD,   8, 
                         SMPR,   8, 
                         SMST,   8, 
@@ -2719,7 +2719,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         Offset (0x90), 
                         CHGM,   16, 
                         CHGS,   16, 
-                        ERIB,   16, 
+                        RIB0,8,RIB1,8, 
                         ERBD,   8, 
                         CHGV,   8, 
                         CHGA,   16, 
@@ -2860,14 +2860,14 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                         BST0,   8, 
                         BRC0,   16, 
                         BSN0,   16, 
-                        BPV0,   16, 
+                        PV00,8,PV01,8, 
                         BDV0,   16, 
-                        BDC0,   16, 
-                        BFC0,   16, 
+                        DC00,8,DC01,8, 
+                        FC00,8,FC01,8, 
                         GAU0,   8, 
                         CYC0,   8, 
                         BPC0,   16, 
-                        BAC0,   16, 
+                        AC00,8,AC01,8, 
                         BTW0,   8, 
                         BVL0,   8, 
                         BTM0,   8, 
@@ -3739,7 +3739,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                     Method (FANG, 1, NotSerialized)
                     {
                         Acquire (FAMX, 0xFFFF)
-                        Store (Arg0, ERIB)
+                        WECB(0x94,16,Arg0)
+
                         Store (ERBD, Local0)
                         Release (FAMX)
                         Return (Local0)
@@ -3748,7 +3749,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                     Method (FANW, 2, NotSerialized)
                     {
                         Acquire (FAMX, 0xFFFF)
-                        Store (Arg0, ERIB)
+                        WECB(0x94,16,Arg0)
+
                         Store (Arg1, ERBD)
                         Release (FAMX)
                         Return (Arg1)
@@ -3920,6 +3922,29 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
 
                         Return (0xFF)
                     }
+                    Method (WE1B, 2, NotSerialized)
+                    {
+                        OperationRegion(ERAM, EmbeddedControl, Arg0, 1)
+                        Field(ERAM, ByteAcc, NoLock, Preserve) { BYTE, 8 }
+                        Store(Arg1, BYTE)
+                    }
+                    Method (WECB, 3, Serialized)
+                    // Arg0 - offset in bytes from zero-based EC
+                    // Arg1 - size of buffer in bits
+                    // Arg2 - value to write
+                    {
+                        ShiftRight(Add(Arg1,7), 3, Arg1)
+                        Name(TEMP, Buffer(Arg1) { })
+                        Store(Arg2, TEMP)
+                        Add(Arg0, Arg1, Arg1)
+                        Store(0, Local0)
+                        While (LLess(Arg0, Arg1))
+                        {
+                            WE1B(Arg0, DerefOf(Index(TEMP, Local0)))
+                            Increment(Arg0)
+                            Increment(Local0)
+                        }
+                    }
                 }
 
                 Device (PWRB)
@@ -4023,7 +4048,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                             }
 
                             Sleep (0x14)
-                            Store (^^EC0.BFC0, BFC1)
+                            Store (B1B2(^^EC0.FC00,^^EC0.FC01), BFC1)
                             Sleep (0x14)
                             Store (^^EC0.BMF0, Local1)
                             Sleep (0x14)
@@ -4057,12 +4082,12 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                             Store ("Li-Ion", Index (STAT, 0x0B))
                         }
 
-                        If (^^EC0.BDC0)
+                        If (B1B2(^^EC0.DC00,^^EC0.DC01))
                         {
-                            Store (^^EC0.BDC0, Local1)
+                            Store (B1B2(^^EC0.DC00,^^EC0.DC01), Local1)
                             Multiply (Local1, 0x0A, Local1)
                             Store (Local1, Index (STAT, One))
-                            Store (^^EC0.BFC0, Local2)
+                            Store (B1B2(^^EC0.FC00,^^EC0.FC01), Local2)
                             Multiply (Local2, 0x0A, Local2)
                             Store (Local2, Index (STAT, 0x02))
                         }
@@ -4086,7 +4111,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                             Sleep (0x14)
                             Store (^^EC0.GAU0, BGU1)
                             Sleep (0x14)
-                            Store (^^EC0.BPV0, Local3)
+                            Store (B1B2(^^EC0.PV00,^^EC0.PV01), Local3)
                             Sleep (0x14)
                         }
 
@@ -4100,7 +4125,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
                             Multiply (BGU1, 0x28, Local2)
                         }
 
-                        Store (^^EC0.BAC0, Local5)
+                        Store (B1B2(^^EC0.AC00,^^EC0.AC01), Local5)
                         And (Local5, 0x8000, Local6)
                         If (LEqual (Local6, 0x8000))
                         {
@@ -5011,7 +5036,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
             })
             Method (_TMP, 0, Serialized)  // _TMP: Temperature
             {
-                Store (0x8400, \_SB.PCI0.LPCB.EC0.ENIB)
+                \_SB.PCI0.LPCB.EC0.WECB(0x5D,16,0x8400)
+
                 Store (\_SB.PCI0.LPCB.EC0.ENDD, Local0)
                 If (LGreaterEqual (Local0, THLD))
                 {
@@ -10769,5 +10795,6 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "CB-01   ", 0x00000001)
     {
         Name(_HID, "RMKB0000")
     }
+    Method (B1B2, 2, NotSerialized) { Return(Or(Arg0, ShiftLeft(Arg1, 8))) }
 }
 

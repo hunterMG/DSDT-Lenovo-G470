@@ -1,0 +1,76 @@
+# use for make the battary patch of Lenovo G470
+# If a register was declared but wasn’t accessed by any existing code, no need to patch it.
+OperationRegion (ERAM, EmbeddedControl, Zero, 0xFF)
+                    Field (ERAM, ByteAcc, Lock, Preserve)
+                    {
+                        BATM,   16,
+                        ENIB,   16, 
+                        CHGM,   16, 
+                        CHGS,   16, 
+                        ERIB,   16, 
+                        CHGA,   16, 
+                        BRC0,   16, 
+                        BSN0,   16, 
+                        BPV0,   16, 
+                        BDV0,   16, 
+                        BDC0,   16, 
+                        BFC0,   16, 
+                        BPC0,   16, 
+                        BAC0,   16, 
+                        BCG0,   16, 
+                        BSSB,   16, 
+                        BCV1,   16, 
+                        BCV2,   16, 
+                        BCV3,   16, 
+                        BCV4,   16, 
+                        BMD0,   16, 
+                        BACV,   16, 
+                        SMAA,   24, 
+                        BATD,   56, 
+                        SMD0,   256,
+                    }
+
+OperationRegion (ECRM, EmbeddedControl, Zero, 0xFF)
+                    Field (ECRM, ByteAcc, Lock, Preserve)
+                    {
+                        RFRD,   16
+                    }
+
+
+into device label EC0 code_regex BATM,\s+16 replace_matched begin ATM0,8,ATM1,8 end;
+into device label EC0 code_regex CHGM,\s+16 replace_matched begin HGM0,8,HGM1,8 end;
+into device label EC0 code_regex CHGS,\s+16 replace_matched begin HGS0,8,HGS1,8 end;
+into device label EC0 code_regex CHGA,\s+16 replace_matched begin HGA0,8,HGA1,8 end;
+into device label EC0 code_regex BRC0,\s+16 replace_matched begin RC00,8,RC01,8 end;
+into device label EC0 code_regex BSN0,\s+16 replace_matched begin SN00,8,SN01,8 end;
+into device label EC0 code_regex BDV0,\s+16 replace_matched begin DV00,8,DV01,8 end;
+into device label EC0 code_regex BPC0,\s+16 replace_matched begin PC00,8,PC01,8 end;
+into device label EC0 code_regex BCG0,\s+16 replace_matched begin CG00,8,CG01,8 end;
+into device label EC0 code_regex BSSB,\s+16 replace_matched begin SSB0,8,SSB1,8 end;
+into device label EC0 code_regex BCV1,\s+16 replace_matched begin CV10,8,CV11,8 end;
+into device label EC0 code_regex BCV2,\s+16 replace_matched begin CV20,8,CV21,8 end;
+into device label EC0 code_regex BCV3,\s+16 replace_matched begin CV30,8,CV31,8 end;
+into device label EC0 code_regex BCV4,\s+16 replace_matched begin CV40,8,CV41,8 end;
+into device label EC0 code_regex BMD0,\s+16 replace_matched begin MD00,8,MD01,8 end;
+into device label EC0 code_regex BACV,\s+16 replace_matched begin ACV0,8,ACV1,8 end;
+———————————————————————————————————
+# 24-bit registers
+into device label EC0 code_regex SMAA,\s+24 replace_matched begin MAA0,8,MAA1,8,MAA2,8,MAA3,8 end;
+
+# fix 24-bit methods
+# no existing code accesses the only one 24-bit register “SMAA”, so no need to fix
+
+# Buffer registers(larger than 32 bits)
+
+
+into method label B1B3 remove_entry;
+into definitionblock code_regex . insert
+begin
+Method (B1B3, 3, NotSerialized)\n
+{\n
+    Store(Arg2, Local0)\n
+    Or(Arg1, ShiftLeft(Local0, 8), Local0)\n
+    Or(Arg0, ShiftLeft(Local0, 8), Local0)\n
+    Return(Local0)\n
+}\n
+end;
