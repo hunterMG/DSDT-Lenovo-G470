@@ -3,14 +3,14 @@
 
 into method label _Q11 replace_content
 begin
-// Brightness Down\n
-Notify(\RMKB, 0x2191)\n
-Notify(\RMKB, 0x2291)\n
+// Brightness Down (use F18, need to set shortcut in setting) \n
+Notify(\RMKB, 0x114f)\n
+Notify(\RMKB, 0x124f)\n
 end;
 
 into method label _Q12 replace_content
 begin
 // Brightness Up\n
-Notify(\RMKB, 0x2190)\n
-Notify(\RMKB, 0x2290)\n
+Notify(\RMKB, 0x1191)\n
+Notify(\RMKB, 0x1291)\n
 end;
