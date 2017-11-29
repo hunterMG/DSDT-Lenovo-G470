@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KernelBooter_kexts</key>
+	<string>Yes</string>
+	<key>KernelHasswell</key>
+	<string>No</string>
+	<key>KernelLapicError</key>
+	<string>No</string>
+	<key>KernelLapicVersion</key>
+	<string>No</string>
+	<key>KernelPm</key>
+	<string>Yes</string>
+	<key>KernelSSE3</key>
+	<string>No</string>
+	<key>KernelcpuFamily</key>
+	<string>No</string>
+</dict>
+</plist>

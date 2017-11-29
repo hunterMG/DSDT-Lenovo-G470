@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KextsPatches</key>
+	<dict>
+		<key>AppleHDA</key>
+		<array>
+			<dict>
+				<key>Comment</key>
+				<string>Zeroing 11d41983 codec</string>
+				<key>Find</key>
+				<data>gxnUEQ==</data>
+				<key>MatchBuild</key>
+				<string>15G1004</string>
+				<key>MatchOS</key>
+				<string>10.7.x,10.8.x,10.9.x,10.10.x,10.11.x</string>
+				<key>Replace</key>
+				<data>AAAAAA==</data>
+			</dict>
+			<dict>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Comment</key>
+				<string>Zeroing 11d4198a codec (patched by AppleHDA Patcher.app)</string>
+				<key>Find</key>
+				<data>ihnUEQ==</data>
+				<key>Replace</key>
+				<data>AAAAAA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Zeroing 11d41984 codec (patched by AppleHDA Patcher.app)</string>
+				<key>Find</key>
+				<data>hBnUEQ==</data>
+				<key>Replace</key>
+				<data>AAAAAA==</data>
+			</dict>
+			<dict>
+				<key>MatchOS</key>
+				<string>10.7.x,10.8.x,10.9.x,10.10.x,10.11.x,10.12.x</string>
+				<key>Comment</key>
+				<string>Patching 11d4198b with 111d76e0 codec (patched by AppleHDA Patcher.app)</string>
+				<key>Find</key>
+				<data>ixnUEQ==</data>
+				<key>Replace</key>
+				<data>4HYdEQ==</data>
+			</dict>
+		</array>
+		<key>IOAHCIBlockStorage</key>
+		<array>
+			<dict>
+				<key>MatchOS</key>
+				<string>10.7.x,10.8.x,10.9.x,10.10.x,10.11.x,10.12.x</string>
+				<key>Comment</key>
+				<string>Enable TRIM for SSD</string>
+				<key>Find</key>
+				<data>AEFQUExFIFNTRAA=</data>
+				<key>Replace</key>
+				<data>AAAAAAAAAAAAAAA=</data>
+			</dict>
+		</array>
+		<key>AppleUSBXHCIPCI</key>
+		<array>
+			<dict>
+				<key>MatchOS</key>
+				<string>10.11.x</string>
+				<key>Comment</key>
+				<string>remove usb limit</string>
+				<key>Find</key>
+				<data>g72M/v//EA==</data>
+				<key>Replace</key>
+				<data>g72M/v//Fg==</data>
+			</dict>
+			<dict>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Comment</key>
+				<string>remove usb limit</string>
+				<key>Find</key>
+				<data>g710////EA==</data>
+				<key>Replace</key>
+				<data>g710////Fg==</data>
+			</dict>
+		</array>
+	</dict>
+	<key>AppleRTCPatch</key>
+	<true/>
+	<key>OrangeIconFixSata</key>
+	<true/>
+	<key>TrimEnablerSata</key>
+	<true/>
+	<key>AICPMPatch</key>
+	<true/>
+	<key>ForceToLoad</key>
+	<array>
+		<string>AppleHDA</string>
+	</array>
+	<key>PersonalitiesInjector</key>
+	<dict>
+		<key>WifiInjector</key>
+		<dict>
+			<key>MatchOS</key>
+			<string>10.7.x,10.8.x,10.9.x,10.10.x,10.11.x,10.12.x</string>
+			<key>Comment</key>
+			<string>Injector for ar9285</string>
+			<key>OSBundleRequired</key>
+			<string>Network-Root</string>
+			<key>IOKitPersonalities</key>
+			<dict>
+				<key>Atheros Newma40</key>
+				<dict>
+					<key>CFBundleIdentifier</key>
+					<string>com.apple.driver.AirPort.Atheros40</string>
+					<key>IOClass</key>
+					<string>AirPort_AtherosNewma40</string>
+					<key>IOMatchCategory</key>
+					<string>IODefaultMatchCategory</string>
+					<key>IONameMatch</key>
+					<array>
+						<string>pci168c,2e</string>
+						<string>pci168c,2d</string>
+						<string>pci168c,2b</string>
+					</array>
+					<key>IOProbeScore</key>
+					<integer>600</integer>
+					<key>IOProviderClass</key>
+					<string>IOPCIDevice</string>
+				</dict>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

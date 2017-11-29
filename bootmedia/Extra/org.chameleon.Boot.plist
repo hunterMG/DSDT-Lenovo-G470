@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Instant Menu</key>
+	<string>yes</string>
+	<key>RebootOnPanic</key>
+	<string>No</string>
+	<key>Default Partition</key>
+    <string>hd(0,8)</string>
+    <key>Hide Partition</key>
+    <string>hd(0,5) hd(0,6) hd(0,7)</string>
+</dict>
+</plist>
