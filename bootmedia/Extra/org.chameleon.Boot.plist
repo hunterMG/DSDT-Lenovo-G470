@@ -10,5 +10,10 @@
     <string>hd(0,8)</string>
     <key>Hide Partition</key>
     <string>hd(0,5) hd(0,6) hd(0,7)</string>
+	<key>Timeout</key>
+	<string>5</string>
+	<key>Rename Partition</key>
+	<string>hd(0,8) macOS_Sierra</string>
+	
 </dict>
 </plist>
