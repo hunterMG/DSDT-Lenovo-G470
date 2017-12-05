@@ -31,9 +31,9 @@
 	<key>devices_pos_y</key>
 	<string></string>
 	<key>devices_bgcolor</key>
-	<string>#222334</string>
+	<string>#8E2595</string>
 	<key>devices_transparency</key>
-	<string>0</string>
+	<string>200</string>
 	<key>devices_max_visible</key>
 	<string>5</string>
 	<key>devices_iconspacing</key>
