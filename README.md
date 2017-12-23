@@ -1,6 +1,6 @@
 
 # Hackintosh 10.11.x
-
+([10.12.x version here](https://github.com/hunterMG/DSDT-Lenovo-G470/tree/Sierra))
 ## MaciASL 
 https://bitbucket.org/RehabMan/os-x-maciasl-patchmatic/downloads
 
